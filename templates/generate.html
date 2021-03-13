@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Zafar - Automated Urdu Paragraph Generator</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Custom fonts for this template -->
+  <link href="static/vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
+  <link href="static/vendor/simple-line-icons/css/simple-line-icons.css" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet"
+    type="text/css">
+
+  <!-- Custom styles for this template -->
+  <link href="static/css/landing-page.css" rel="stylesheet">
+
+  <link href="static/css/star2.css" rel="stylesheet">
+
+  <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+</head>
+
+<body class="bg-dark">
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-dark bg-dark static-top">
+    <div class="container">
+      <a class="navbar-brand" href="{{ url_for('index') }}">Zafar</a>
+      <ul class="list-inline text-lg-left mb-0">
+        <li class="list-inline-item">
+          <a href="{{ url_for('index') }}">Home</a>
+        </li>
+
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Icons Grid -->
+
+  <section class="text-white text-center">
+    <div class="container p-5">
+      <div class="row">
+        <p class="lead mb-4">
+          To generate a paragraph, enter Urdu keywords in the following boxes. You can provide up to five keywords but at least one. Model will try to generate a paragraph in context of given keywords. You can also provide feedback after paragraph has been generated. Feedback comprises of score on coherency, relevance to the keywords and grammar of generated paragraph.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+
+    <form>
+    <div class="container mb-5">
+      <div class="col-12 col-md-6 mb-3 mx-auto">
+        <input name="key1" type="text" class="form-control form-control-lg text-white bg-dark" placeholder="Keyword 1, e.g. کرکٹ" required>
+      </div>
+      <div class="col-12 col-md-6 mb-3 mx-auto">
+        <input name="key2" type="text" class="form-control form-control-lg text-white bg-dark" placeholder="Keyword 2، e.g. پاکستان">
+      </div>
+      <div class="col-12 col-md-6 mb-3 mx-auto">
+        <input name="key3" type="text" class="form-control form-control-lg text-white bg-dark" placeholder="Keyword 3, e.g. میچ">
+      </div>
+      <div class="col-12 col-md-6 mb-3 mx-auto">
+        <input name="key4" type="text" class="form-control form-control-lg text-white bg-dark" placeholder="Keyword 4, e.g. جیت">
+      </div>
+      <div class="col-12 col-md-6 mb-3 mx-auto">
+        <input name="key5" type="text" class="form-control form-control-lg text-white bg-dark" placeholder="Keyword 5, e.g. جشن">
+      </div>
+
+    </div>
+
+    <div class="container mb-5">
+      <div class="col-12 col-md-3 mb-3 mx-auto">
+        <button type="submit" class="btn btn-block btn-lg btn-primary">Generate Paragraph</button>
+      </div>
+    </div>
+
+  </form>
+  </section>
+
+  <section class="text-white text-center">
+    <div class="container p-5">
+      <div class="row">
+        <p class="lead mb-4">
+          You can give ratings to the paragraph generated in the following categories. This feedback may be used to enhance the performance of the model in later trainings.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="gen-para-1">
+    <div class="container">
+      <!-- <div class="row"> -->
+        <div class="form-row col-12 mx-auto">
+          <h2 class="col-md-12 mx-auto text-white text-center">Paragraph 1</h2>
+        </div>
+
+        <div class="form-row col-12 mx-auto">
+          <textarea class="col-md-12 mx-auto text-white bg-dark" placeholder="Paragraph 1" style="-webkit-border-radius: 5px;
+          -moz-border-radius: 5px;
+          border-radius: 5px;
+          border-width: 5px;"></textarea>
+        </div>
+
+        <div class="form-row col-12 mx-auto">
+
+          <div class="col-md-3 mx-auto">
+            <label class="text-white" style="font-size: 30px;">Coherency</label>
+          </div>
+
+          <div class="col-md-3 mx-auto">
+
+            <div class="star-widget">
+              <input type="radio" name="rate_coherency" id="rate-c-5">
+              <label for="rate-c-5" class="fas fa-star"></label>
+
+              <input type="radio" name="rate_coherency" id="rate-c-4">
+              <label for="rate-c-4" class="fas fa-star"></label>
+
+              <input type="radio" name="rate_coherency" id="rate-c-3">
+              <label for="rate-c-3" class="fas fa-star"></label>
+
+              <input type="radio" name="rate_coherency" id="rate-c-2">
+              <label for="rate-c-2" class="fas fa-star"></label>
+              
+              <input type="radio" name="rate_coherency" id="rate-c-1">
+              <label for="rate-c-1" class="fas fa-star"></label>
+            
+            </div>
+
+          </div>
+
+          <div class="form-row col-12 mx-auto">
+
+            <div class="col-md-3 mx-auto">
+              <label class="text-white" style="font-size: 30px;">Relevance</label>
+            </div>
+  
+            <div class="col-md-3 mx-auto">
+  
+              <div class="star-widget">
+                <input type="radio" name="rate_relevance" id="rate-r-5">
+                <label for="rate-r-5" class="fas fa-star"></label>
+  
+                <input type="radio" name="rate_relevance" id="rate-r-4">
+                <label for="rate-r-4" class="fas fa-star"></label>
+  
+                <input type="radio" name="rate_relevance" id="rate-r-3">
+                <label for="rate-r-3" class="fas fa-star"></label>
+  
+                <input type="radio" name="rate_relevance" id="rate-r-2">
+                <label for="rate-r-2" class="fas fa-star"></label>
+                
+                <input type="radio" name="rate_relevance" id="rate-r-1">
+                <label for="rate-r-1" class="fas fa-star"></label>
+              
+              </div>
+  
+            </div>
+          </div>
+          
+
+          <div class="form-row col-12 mx-auto">
+
+            <div class="col-md-3 mx-auto">
+              <label class="text-white" style="font-size: 30px;">Grammar</label>
+            </div>
+  
+            <div class="col-md-3 mx-auto">
+  
+              <div class="star-widget">
+                <input type="radio" name="rate_grammar" id="rate-g-5">
+                <label for="rate-g-5" class="fas fa-star"></label>
+  
+                <input type="radio" name="rate_grammar" id="rate-g-4">
+                <label for="rate-g-4" class="fas fa-star"></label>
+  
+                <input type="radio" name="rate_grammar" id="rate-g-3">
+                <label for="rate-g-3" class="fas fa-star"></label>
+  
+                <input type="radio" name="rate_grammar" id="rate-g-2">
+                <label for="rate-g-2" class="fas fa-star"></label>
+                
+                <input type="radio" name="rate_grammar" id="rate-g-1">
+                <label for="rate-g-1" class="fas fa-star"></label>
+              
+              </div>
+  
+            </div>
+          </div>
+
+                   
+            
+        </div>
+
+      <!-- </div> -->
+    <!-- </div> -->
+
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer bg-dark">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-6 h-100 text-center text-lg-left my-auto">
+
+          <p class="text-white small mb-1 mb-lg-0">&copy; Zafar 2021. All Rights Reserved.</p>
+        </div>
+
+      </div>
+    </div>
+  </footer>
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="static/vendor/jquery/jquery.min.js"></script>
+  <script src="static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    const btn = document.querySelector("button");
+    const post = document.querySelector(".post");
+    const widget = document.querySelector(".star-widget");
+    const editBtn = document.querySelector(".edit");
+    btn.onclick = ()=>{
+      // widget.style.display = "none";
+      // post.style.display = "block";
+      editBtn.onclick = ()=>{
+        // widget.style.display = "block";
+        // post.style.display = "none";
+      }
+      return false;
+    }
+  </script>
+
+</body>
+
+</html>
+

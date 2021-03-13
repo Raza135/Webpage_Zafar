@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=yes">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Zafar - Automated Urdu Paragraph Generator</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Custom fonts for this template -->
+  <link href="static/vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
+  <link href="static/vendor/simple-line-icons/css/simple-line-icons.css" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet"
+    type="text/css">
+
+  <!-- Custom styles for this template -->
+  <link href="static/css/landing-page.css" rel="stylesheet">
+
+</head>
+
+<body class="bg-dark">
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-dark bg-dark static-top">
+    <div class="container">
+      <a class="navbar-brand" href="{{ url_for('index') }}">Zafar</a>
+      <ul class="list-inline text-lg-left mb-0">
+        <li class="list-inline-item">
+          <a href="{{ url_for('generate') }}">Generate</a>
+        </li>
+        <li class="list-inline-item">
+          <a href="#about">About</a>
+        </li>
+        <li class="list-inline-item">
+          <a href="#contact-us">Contact</a>
+        </li>
+
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Masthead -->
+  <header class="masthead text-white text-center">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-xl-11 mx-auto">
+          <h1 class="mb-5">Zafar is a Deep Learning based Automated Paragraph generator for Urdu language</h1>
+        </div>
+        <div class="col-md-10 col-lg-8 col-xl-7 mx-auto">
+          <form>
+            <div class="form-row">
+              <!-- <div class="col-12 col-md-9 mb-2 mb-md-0">
+                <input type="email" class="form-control form-control-lg" placeholder="Enter your email...">
+              </div> -->
+              <div class="col-9 col-md-7 mx-auto">
+                <a class="btn btn-block btn-lg btn-primary" href="{{ url_for('generate') }}">Let's generate paragraphs!</a>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Icons Grid -->
+
+  <section class="features-icons text-white bg-dark text-center" id="about">
+    <div class="container p-3">
+      <div class="row">
+
+        <p class="lead mb-5">Project "Zafar: Deep Learning based Automated Topical Urdu Paragraph Generator" has been developed by "Team Ghalib", a team of four Habib University students, name: Muhammad Ahmed, Raza Naqvi, Kabir and Hamza Rizvi.
+          Basic idea of project is to generate a paragraph of a story in Urdu upon given a few keywords. Goal is to
+          generate a relevant, coherent, meaningful and grammatically correct paragraph.
+        </p>
+        <p class="lead mb-0">
+          Our work is first of its kind for Urdu language. For Urdu previously, work has been done in domain of
+          plagiarism detection, summary generation and caption generation but we didn't find any substantial work for
+          automatically generating paragraphs on a specified topic. We hope that our work will bring substantial
+          contribution to Natural Language Generation (NLG), a subfield of NLP, for Urdu. We also hope that this work
+          will serve as basis of further advanced research in the domain of automated language generation for Urdu.</p>
+      </div>
+    </div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-6">
+          <div class="features-icons-item mx-auto mb-5">
+            <a href="https://github.com/MuhammadAhmed123" target="_blank">
+              <div class="features-icons-icon d-flex">
+                <i class="icon-social-github m-auto text-secondary"></i>
+              </div>
+              <h3>Github</h3>
+            </a>
+            <p class="lead mb-0">Check out project repository to see the coding!</p>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="features-icons-item mx-auto mb-5">
+            <a href="https://drive.google.com/file/d/18JUu3yAk1TWm8om5HTyjxFSBmmL9tLFw/view?usp=sharing" target="_blank">
+              <div class="features-icons-icon d-flex">
+                <i class="icon-doc m-auto text-secondary"></i>
+              </div>
+              <h3>Project Report</h3>
+            </a>
+            <p class="lead mb-0">Read report to gain knowledge about working and testing of model!</p>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+  </section>
+
+  <!-- Call to Action -->
+
+  <section class="call-to-action text-white text-center" id="contact-us">
+    <div class="overlay"></div>
+    <div class="container">
+      <!-- <div class="row"> -->
+      <div class="col-xl-9 mx-auto">
+        <h2 class="mb-5">Interested to know more or got a feedback? Reach out to us over email.</h2>
+      </div>
+      <div class="col-md-10 col-lg-8 col-xl-7 mx-auto">
+        <form>
+          <!-- <div class="form-row"> -->
+          <div class="col-xl-12 col-md-12 mb-3 mx-auto">
+            <textarea class="form-control form-control-lg text-white bg-dark" placeholder="Thoughts or message..."></textarea>
+          </div>
+
+          <div class="col-12 col-md-9 mb-3 mx-auto">
+            <input type="email" class="form-control form-control-lg text-white bg-dark" placeholder="Your email address...">
+          </div>
+
+          <div class="col-12 col-md-3 mb-3 mx-auto">
+            <button type="submit" class="btn btn-block btn-lg btn-primary">Send</button>
+          </div>
+          <!-- </div> -->
+        </form>
+      </div>
+      <!-- </div> -->
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer bg-dark">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-6 h-100 text-center text-lg-left my-auto">
+          
+          <p class="text-white small mb-1 mb-lg-0">&copy; Zafar 2021. All Rights Reserved.</p>
+        </div>
+        
+      </div>
+    </div>
+  </footer>
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="static/vendor/jquery/jquery.min.js"></script>
+  <script src="static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>
