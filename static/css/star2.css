@@ -63,20 +63,133 @@ input:not(:checked) ~ label:hover ~ label{
 input:checked ~ label{
   color: #fd4;
 }
-input#rate-g-5:checked ~ label{
+
+input#p1-rate-g-5:checked ~ label{
+  color: #fe7;
+  text-shadow: 0 0 15px #952;
+}
+input#p2-rate-g-5:checked ~ label{
+  color: #fe7;
+  text-shadow: 0 0 15px #952;
+}
+input#p3-rate-g-5:checked ~ label{
+  color: #fe7;
+  text-shadow: 0 0 15px #952;
+}
+input#p4-rate-g-5:checked ~ label{
+  color: #fe7;
+  text-shadow: 0 0 15px #952;
+}
+input#p5-rate-g-5:checked ~ label{
+  color: #fe7;
+  text-shadow: 0 0 15px #952;
+}
+input#p6-rate-g-5:checked ~ label{
+  color: #fe7;
+  text-shadow: 0 0 15px #952;
+}
+input#p7-rate-g-5:checked ~ label{
+  color: #fe7;
+  text-shadow: 0 0 15px #952;
+}
+input#p8-rate-g-5:checked ~ label{
+  color: #fe7;
+  text-shadow: 0 0 15px #952;
+}
+input#p9-rate-g-5:checked ~ label{
+  color: #fe7;
+  text-shadow: 0 0 15px #952;
+}
+input#p10-rate-g-5:checked ~ label{
   color: #fe7;
   text-shadow: 0 0 15px #952;
 }
 
-input#rate-c-5:checked ~ label{
+
+input#p1-rate-c-5:checked ~ label{
+  color: #fe7;
+  text-shadow: 0 0 15px #952;
+}
+input#p2-rate-c-5:checked ~ label{
+  color: #fe7;
+  text-shadow: 0 0 15px #952;
+}
+input#p3-rate-c-5:checked ~ label{
+  color: #fe7;
+  text-shadow: 0 0 15px #952;
+}
+input#p4-rate-c-5:checked ~ label{
+  color: #fe7;
+  text-shadow: 0 0 15px #952;
+}
+input#p5-rate-c-5:checked ~ label{
+  color: #fe7;
+  text-shadow: 0 0 15px #952;
+}
+input#p6-rate-c-5:checked ~ label{
+  color: #fe7;
+  text-shadow: 0 0 15px #952;
+}
+input#p7-rate-c-5:checked ~ label{
+  color: #fe7;
+  text-shadow: 0 0 15px #952;
+}
+input#p8-rate-c-5:checked ~ label{
+  color: #fe7;
+  text-shadow: 0 0 15px #952;
+}
+input#p9-rate-c-5:checked ~ label{
+  color: #fe7;
+  text-shadow: 0 0 15px #952;
+}
+input#p10-rate-c-5:checked ~ label{
   color: #fe7;
   text-shadow: 0 0 15px #952;
 }
 
-input#rate-r-5:checked ~ label{
+
+input#p1-rate-r-5:checked ~ label{
   color: #fe7;
   text-shadow: 0 0 15px #952;
 }
+input#p2-rate-r-5:checked ~ label{
+  color: #fe7;
+  text-shadow: 0 0 15px #952;
+}
+input#p3-rate-r-5:checked ~ label{
+  color: #fe7;
+  text-shadow: 0 0 15px #952;
+}
+input#p4-rate-r-5:checked ~ label{
+  color: #fe7;
+  text-shadow: 0 0 15px #952;
+}
+input#p5-rate-r-5:checked ~ label{
+  color: #fe7;
+  text-shadow: 0 0 15px #952;
+}
+input#p6-rate-r-5:checked ~ label{
+  color: #fe7;
+  text-shadow: 0 0 15px #952;
+}
+input#p7-rate-r-5:checked ~ label{
+  color: #fe7;
+  text-shadow: 0 0 15px #952;
+}
+input#p8-rate-r-5:checked ~ label{
+  color: #fe7;
+  text-shadow: 0 0 15px #952;
+}
+input#p9-rate-r-5:checked ~ label{
+  color: #fe7;
+  text-shadow: 0 0 15px #952;
+}
+input#p10-rate-r-5:checked ~ label{
+  color: #fe7;
+  text-shadow: 0 0 15px #952;
+}
+
+
 /* #rate-1:checked ~ form header:before{
   content: "I just hate it 😠";
 }

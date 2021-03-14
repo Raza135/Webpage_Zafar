@@ -2,8 +2,8 @@
 <html lang="en">
 
 <head>
-
-  <meta charset="utf-8">
+  <meta content="text/html; charset=utf-8" http-equiv=Content-Type>
+  <!-- <meta charset="utf-8"> -->
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
   <meta name="author" content="">
@@ -26,6 +26,18 @@
 
   <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 
+  <style>
+    @font-face {
+      font-family: urduNastaliq;
+      src: url('static/fonts/JameelNooriNastaleeqRegular.ttf') format('truetype'),
+      url('static/fonts/JameelNooriNastaleeqRegular.woff2') format("woff2");
+    }
+  </style>
+
+  <script src="static/urduTyping.js" type=text/javascript></script>
+  <script type=text/javascript>initUrduEditor()</script>
+
+
 </head>
 
 <body class="bg-dark">
@@ -35,8 +47,17 @@
     <div class="container">
       <a class="navbar-brand" href="{{ url_for('index') }}">Zafar</a>
       <ul class="list-inline text-lg-left mb-0">
-        <li class="list-inline-item">
+        <!-- <li class="list-inline-item">
           <a href="{{ url_for('index') }}">Home</a>
+        </li> -->
+        <li class="list-inline-item">
+          <a href="{{ url_for('generate') }}">Generate</a>
+        </li>
+        <li class="list-inline-item">
+          <a href="{{ url_for('index', _anchor='about') }}">About</a>
+        </li>
+        <li class="list-inline-item">
+          <a href="{{ url_for('index', _anchor='contact-us') }}">Contact</a>
         </li>
 
       </ul>
@@ -47,161 +68,93 @@
 
   <section class="text-white text-center">
     <div class="container p-5">
-      <div class="row">
+      <div class="form-row col-12 mx-auto">
         <p class="lead mb-4">
-          To generate a paragraph, enter Urdu keywords in the following boxes. You can provide up to five keywords but at least one. Model will try to generate a paragraph in context of given keywords. You can also provide feedback after paragraph has been generated. Feedback comprises of score on coherency, relevance to the keywords and grammar of generated paragraph.</p>
+          To generate a paragraph, enter Urdu keywords in the following boxes. You can provide up to five keywords but
+          at least one. Model will try to generate a paragraph in context of given keywords. You can also provide
+          feedback after paragraph has been generated. Feedback comprises of score on coherency, relevance to the
+          keywords and grammar of generated paragraph.</p>
+        <p class="lead mb-4">
+          Note that the following text-boxes for keywords have set to type in Urdu. You just need to type in English and
+          the characters will be transcribed to their phonetic counterparts in Urdu.</p>
       </div>
     </div>
   </section>
+
+  <!-- https://hindityping.info/online-urdu-typing-test/ -->
+
+  <!-- https://in.pinterest.com/pin/526428643923238528/ -->
 
   <section>
 
-    <form>
-    <div class="container mb-5">
-      <div class="col-12 col-md-6 mb-3 mx-auto">
-        <input name="key1" type="text" class="form-control form-control-lg text-white bg-dark" placeholder="Keyword 1, e.g. کرکٹ" required>
-      </div>
-      <div class="col-12 col-md-6 mb-3 mx-auto">
-        <input name="key2" type="text" class="form-control form-control-lg text-white bg-dark" placeholder="Keyword 2، e.g. پاکستان">
-      </div>
-      <div class="col-12 col-md-6 mb-3 mx-auto">
-        <input name="key3" type="text" class="form-control form-control-lg text-white bg-dark" placeholder="Keyword 3, e.g. میچ">
-      </div>
-      <div class="col-12 col-md-6 mb-3 mx-auto">
-        <input name="key4" type="text" class="form-control form-control-lg text-white bg-dark" placeholder="Keyword 4, e.g. جیت">
-      </div>
-      <div class="col-12 col-md-6 mb-3 mx-auto">
-        <input name="key5" type="text" class="form-control form-control-lg text-white bg-dark" placeholder="Keyword 5, e.g. جشن">
-      </div>
+    <form action="{{ url_for('getKeyWords') }}" method="post">
 
-    </div>
-
-    <div class="container mb-5">
-      <div class="col-12 col-md-3 mb-3 mx-auto">
-        <button type="submit" class="btn btn-block btn-lg btn-primary">Generate Paragraph</button>
-      </div>
-    </div>
-
-  </form>
-  </section>
-
-  <section class="text-white text-center">
-    <div class="container p-5">
-      <div class="row">
-        <p class="lead mb-4">
-          You can give ratings to the paragraph generated in the following categories. This feedback may be used to enhance the performance of the model in later trainings.</p>
-      </div>
-    </div>
-  </section>
-
-  <section id="gen-para-1">
-    <div class="container">
-      <!-- <div class="row"> -->
-        <div class="form-row col-12 mx-auto">
-          <h2 class="col-md-12 mx-auto text-white text-center">Paragraph 1</h2>
+      <div class="container mb-5">
+        <div class="col-12 col-md-6 mb-3 mx-auto">
+          <input lang="ur" name="key1" type="text" class="form-control form-control-lg text-white bg-dark"
+            placeholder=" کرکٹ Keyword 1, example " required
+            style="font-family: urduNastaliq, Fallback, sans-serif; text-align: left; direction: rtl;" id="input_key1">
         </div>
 
-        <div class="form-row col-12 mx-auto">
-          <textarea class="col-md-12 mx-auto text-white bg-dark" placeholder="Paragraph 1" style="-webkit-border-radius: 5px;
-          -moz-border-radius: 5px;
-          border-radius: 5px;
-          border-width: 5px;"></textarea>
+        <script type=text/javascript>makeUrduEditor("key1", "24px")</script>
+
+        <div class="col-12 col-md-6 mb-3 mx-auto">
+          <input lang="ur" name="key2" type="text" class="form-control form-control-lg text-white bg-dark"
+            placeholder=" پاکستان Keyword 2, example "
+            style="font-family: urduNastaliq, Fallback, sans-serif; text-align: left; direction: rtl;" id="input_key2">
         </div>
 
-        <div class="form-row col-12 mx-auto">
+        <script type=text/javascript>makeUrduEditor("key2", "24px")</script>
 
-          <div class="col-md-3 mx-auto">
-            <label class="text-white" style="font-size: 30px;">Coherency</label>
-          </div>
-
-          <div class="col-md-3 mx-auto">
-
-            <div class="star-widget">
-              <input type="radio" name="rate_coherency" id="rate-c-5">
-              <label for="rate-c-5" class="fas fa-star"></label>
-
-              <input type="radio" name="rate_coherency" id="rate-c-4">
-              <label for="rate-c-4" class="fas fa-star"></label>
-
-              <input type="radio" name="rate_coherency" id="rate-c-3">
-              <label for="rate-c-3" class="fas fa-star"></label>
-
-              <input type="radio" name="rate_coherency" id="rate-c-2">
-              <label for="rate-c-2" class="fas fa-star"></label>
-              
-              <input type="radio" name="rate_coherency" id="rate-c-1">
-              <label for="rate-c-1" class="fas fa-star"></label>
-            
-            </div>
-
-          </div>
-
-          <div class="form-row col-12 mx-auto">
-
-            <div class="col-md-3 mx-auto">
-              <label class="text-white" style="font-size: 30px;">Relevance</label>
-            </div>
-  
-            <div class="col-md-3 mx-auto">
-  
-              <div class="star-widget">
-                <input type="radio" name="rate_relevance" id="rate-r-5">
-                <label for="rate-r-5" class="fas fa-star"></label>
-  
-                <input type="radio" name="rate_relevance" id="rate-r-4">
-                <label for="rate-r-4" class="fas fa-star"></label>
-  
-                <input type="radio" name="rate_relevance" id="rate-r-3">
-                <label for="rate-r-3" class="fas fa-star"></label>
-  
-                <input type="radio" name="rate_relevance" id="rate-r-2">
-                <label for="rate-r-2" class="fas fa-star"></label>
-                
-                <input type="radio" name="rate_relevance" id="rate-r-1">
-                <label for="rate-r-1" class="fas fa-star"></label>
-              
-              </div>
-  
-            </div>
-          </div>
-          
-
-          <div class="form-row col-12 mx-auto">
-
-            <div class="col-md-3 mx-auto">
-              <label class="text-white" style="font-size: 30px;">Grammar</label>
-            </div>
-  
-            <div class="col-md-3 mx-auto">
-  
-              <div class="star-widget">
-                <input type="radio" name="rate_grammar" id="rate-g-5">
-                <label for="rate-g-5" class="fas fa-star"></label>
-  
-                <input type="radio" name="rate_grammar" id="rate-g-4">
-                <label for="rate-g-4" class="fas fa-star"></label>
-  
-                <input type="radio" name="rate_grammar" id="rate-g-3">
-                <label for="rate-g-3" class="fas fa-star"></label>
-  
-                <input type="radio" name="rate_grammar" id="rate-g-2">
-                <label for="rate-g-2" class="fas fa-star"></label>
-                
-                <input type="radio" name="rate_grammar" id="rate-g-1">
-                <label for="rate-g-1" class="fas fa-star"></label>
-              
-              </div>
-  
-            </div>
-          </div>
-
-                   
-            
+        <div class="col-12 col-md-6 mb-3 mx-auto">
+          <input lang="ur" name="key3" type="text" class="form-control form-control-lg text-white bg-dark"
+            placeholder=" میچ Keyword 3, example "
+            style="font-family: urduNastaliq, Fallback, sans-serif; text-align: left; direction: rtl;" id="input_key3">
         </div>
 
-      <!-- </div> -->
-    <!-- </div> -->
+        <script type=text/javascript>makeUrduEditor("key3", "24px")</script>
 
+        <div class="col-12 col-md-6 mb-3 mx-auto">
+          <input lang="ur" name="key4" type="text" class="form-control form-control-lg text-white bg-dark"
+            placeholder=" جیت Keyword 4, example "
+            style="font-family: urduNastaliq, Fallback, sans-serif; text-align: left; direction: rtl;" id="input_key4">
+        </div>
+
+        <script type=text/javascript>makeUrduEditor("key4", "24px")</script>
+
+        <div class="col-12 col-md-6 mb-3 mx-auto">
+          <input lang="ur" name="key5" type="text" class="form-control form-control-lg text-white bg-dark"
+            placeholder=" ایک Keyword 5, example "
+            style="font-family: urduNastaliq, Fallback, sans-serif; text-align: left; direction: rtl;" id="input_key5">
+        </div>
+
+        <script type=text/javascript>makeUrduEditor("key5", "24px")</script>
+
+        <div class="col-12 col-md-12 mx-auto text-center">
+
+          <div class="col-md-6 mx-auto">
+            <label class="text-white" style="font-size: 16px;">No. of Paragraphs</label>
+            <input name="numParas" type="range" min="1" max="10" value="3" class="range custom-range form-range"
+              id="value" oninput="outputUpdate(value)">
+            <output for=value id="output" class="text-white" style="font-size: 16px;">3</output>
+          </div>
+
+          <script>
+            function outputUpdate(num) {
+              document.querySelector('#output').value = num;
+            }
+          </script>
+        </div>
+
+      </div>
+
+      <div class="container mb-5">
+        <div class="col-12 col-md-3 mb-3 mx-auto">
+          <button type="submit" class="btn btn-block btn-lg btn-primary">Generate Paragraph</button>
+        </div>
+      </div>
+
+    </form>
   </section>
 
   <!-- Footer -->
@@ -226,10 +179,10 @@
     const post = document.querySelector(".post");
     const widget = document.querySelector(".star-widget");
     const editBtn = document.querySelector(".edit");
-    btn.onclick = ()=>{
+    btn.onclick = () => {
       // widget.style.display = "none";
       // post.style.display = "block";
-      editBtn.onclick = ()=>{
+      editBtn.onclick = () => {
         // widget.style.display = "block";
         // post.style.display = "none";
       }
@@ -240,4 +193,3 @@
 </body>
 
 </html>
-

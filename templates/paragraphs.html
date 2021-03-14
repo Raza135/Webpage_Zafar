@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta content="text/html; charset=utf-8" http-equiv=Content-Type>
+  <!-- <meta charset="utf-8"> -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Zafar - Automated Urdu Paragraph Generator</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Custom fonts for this template -->
+  <link href="static/vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
+  <link href="static/vendor/simple-line-icons/css/simple-line-icons.css" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet"
+    type="text/css">
+
+  <!-- Custom styles for this template -->
+  <link href="static/css/landing-page.css" rel="stylesheet">
+
+  <link href="static/css/star2.css" rel="stylesheet">
+
+  <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+  <style> 
+    @font-face {
+      font-family: urduNastaliq;
+      src: url('static/fonts/JameelNooriNastaleeqRegular.ttf')  format('truetype'),
+      url('static/fonts/JameelNooriNastaleeqRegular.woff2') format("woff2");
+    }
+
+  </style>
+
+</head>
+
+<body class="bg-dark">
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-dark bg-dark static-top">
+    <div class="container">
+      <a class="navbar-brand" href="{{ url_for('index') }}">Zafar</a>
+      <ul class="list-inline text-lg-left mb-0">
+        <!-- <li class="list-inline-item">
+          <a href="{{ url_for('index') }}">Home</a>
+        </li> -->
+        <li class="list-inline-item">
+          <a href="{{ url_for('generate') }}">Generate</a>
+        </li>
+        <li class="list-inline-item">
+          <a href="{{ url_for('index', _anchor='about') }}">About</a>
+        </li>
+        <li class="list-inline-item">
+          <a href="{{ url_for('index', _anchor='contact-us') }}">Contact</a>
+        </li>
+
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Icons Grid -->
+
+  <section class="text-white text-center">
+    <div class="container p-4">
+      <div class="form-row col-12 mx-auto">
+        <p class="lead mb-4">
+          You can give ratings to the paragraph generated in the following categories. This feedback may be used to
+          enhance the performance of the model in later trainings.</p>
+      </div>
+      <div class="form-row col-12 mx-auto">
+        <h3 class="col-md-12 mx-auto text-white text-center">Keywords</h3>
+      </div>
+      <div class="form-row col-12 mx-auto">
+        <p lang="ur" class="col-md-12 mx-auto text-white text-center" style="font-family: urduNastaliq, Fallback, sans-serif; font-size: 24px;">{{ data['key1'] }}</p>
+
+        {% if data['key2'] %}
+        <p lang="ur" class="col-md-12 mx-auto text-white text-center" style="font-family: urduNastaliq, Fallback, sans-serif; font-size: 24px;">{{ data['key2'] }}</p>
+        {% endif %}
+
+        {% if data['key3'] %}
+        <p lang="ur" class="col-md-12 mx-auto text-white text-center" style="font-family: urduNastaliq, Fallback, sans-serif; font-size: 24px;">{{ data['key3'] }}</p>
+        {% endif %}
+
+        {% if data['key4'] %}
+        <p lang="ur" class="col-md-12 mx-auto text-white text-center" style="font-family: urduNastaliq, Fallback, sans-serif; font-size: 24px;">{{ data['key4'] }}</p>
+        {% endif %}
+
+        {% if data['key5'] %}
+        <p lang="ur" class="col-md-12 mx-auto text-white text-center" style="font-family: urduNastaliq, Fallback, sans-serif; font-size: 24px;">{{ data['key5'] }}</p>
+        {% endif %}
+      </div>
+    </div>
+  </section>
+
+
+  <form action="{{ url_for('getFeedback') }}" method="post">
+
+  {% for paraNum in data['numParas'] %}
+  <section id="gen-para-{{paraNum}}">
+    <div class="container p-4">
+      <!-- <div class="row"> -->
+      <div class="form-row col-12 mx-auto">
+        <h3 class="col-md-12 mx-auto text-white text-center">Paragraph {{paraNum}}</h3>
+      </div>
+
+      <div class="form-row col-12 mx-auto">
+        <textarea lang="ur" class="col-md-12 mx-auto text-white bg-dark"  name="p{{paraNum}}" placeholder="Paragraph {{paraNum}}" style="-webkit-border-radius: 5px;
+          -moz-border-radius: 5px;
+          border-radius: 5px;
+          border-width: 5px;
+          font-family: urduNastaliq, Fallback, sans-serif;" disabled></textarea>
+      </div>
+
+      <div class="form-row col-12 mx-auto">
+
+        <div class="col-md-3 mx-auto">
+          <label class="text-white" style="font-size: 24px;">Coherency</label>
+        </div>
+
+        <div class="col-md-3 mx-auto">
+
+          <div class="star-widget">
+            <input type="radio" name="p{{paraNum}}-rate_coherency" id="p{{paraNum}}-rate-c-5" value="5">
+            <label for="p{{paraNum}}-rate-c-5" class="fas fa-star"></label>
+
+            <input type="radio" name="p{{paraNum}}-rate_coherency" id="p{{paraNum}}-rate-c-4" value="4">
+            <label for="p{{paraNum}}-rate-c-4" class="fas fa-star"></label>
+
+            <input type="radio" name="p{{paraNum}}-rate_coherency" id="p{{paraNum}}-rate-c-3" value="3">
+            <label for="p{{paraNum}}-rate-c-3" class="fas fa-star"></label>
+
+            <input type="radio" name="p{{paraNum}}-rate_coherency" id="p{{paraNum}}-rate-c-2" value="2">
+            <label for="p{{paraNum}}-rate-c-2" class="fas fa-star"></label>
+
+            <input type="radio" name="p{{paraNum}}-rate_coherency" id="p{{paraNum}}-rate-c-1" value="1">
+            <label for="p{{paraNum}}-rate-c-1" class="fas fa-star"></label>
+
+          </div>
+
+        </div>
+
+        <div class="form-row col-12 mx-auto">
+
+          <div class="col-md-3 mx-auto">
+            <label class="text-white" style="font-size: 24px;">Relevance</label>
+          </div>
+
+          <div class="col-md-3 mx-auto">
+
+            <div class="star-widget">
+              <input type="radio" name="p{{paraNum}}-rate_relevance" id="p{{paraNum}}-rate-r-5" value="5">
+              <label for="p{{paraNum}}-rate-r-5" class="fas fa-star"></label>
+
+              <input type="radio" name="p{{paraNum}}-rate_relevance" id="p{{paraNum}}-rate-r-4" value="4">
+              <label for="p{{paraNum}}-rate-r-4" class="fas fa-star"></label>
+
+              <input type="radio" name="p{{paraNum}}-rate_relevance" id="p{{paraNum}}-rate-r-3" value="3">
+              <label for="p{{paraNum}}-rate-r-3" class="fas fa-star"></label>
+
+              <input type="radio" name="p{{paraNum}}-rate_relevance" id="p{{paraNum}}-rate-r-2" value="2">
+              <label for="p{{paraNum}}-rate-r-2" class="fas fa-star"></label>
+
+              <input type="radio" name="p{{paraNum}}-rate_relevance" id="p{{paraNum}}-rate-r-1" value="1">
+              <label for="p{{paraNum}}-rate-r-1" class="fas fa-star"></label>
+
+            </div>
+
+          </div>
+        </div>
+
+
+        <div class="form-row col-12 mx-auto">
+
+          <div class="col-md-3 mx-auto">
+            <label class="text-white" style="font-size: 24px;">Grammar</label>
+          </div>
+
+          <div class="col-md-3 mx-auto">
+
+            <div class="star-widget">
+              <input type="radio" name="p{{paraNum}}-rate_grammar" id="p{{paraNum}}-rate-g-5" value="5">
+              <label for="p{{paraNum}}-rate-g-5" class="fas fa-star"></label>
+
+              <input type="radio" name="p{{paraNum}}-rate_grammar" id="p{{paraNum}}-rate-g-4" value="4">
+              <label for="p{{paraNum}}-rate-g-4" class="fas fa-star"></label>
+
+              <input type="radio" name="p{{paraNum}}-rate_grammar" id="p{{paraNum}}-rate-g-3" value="3">
+              <label for="p{{paraNum}}-rate-g-3" class="fas fa-star"></label>
+
+              <input type="radio" name="p{{paraNum}}-rate_grammar" id="p{{paraNum}}-rate-g-2" value="2">
+              <label for="p{{paraNum}}-rate-g-2" class="fas fa-star"></label>
+
+              <input type="radio" name="p{{paraNum}}-rate_grammar" id="p{{paraNum}}-rate-g-1" value="1">
+              <label for="p{{paraNum}}-rate-g-1" class="fas fa-star"></label>
+
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+      </div>
+      <!-- </div> -->
+
+  </section>
+  {% endfor %}
+
+  <div class="container mb-5">
+    <div class="col-12 col-md-3 mb-3 mx-auto">
+      <button type="submit" class="btn btn-block btn-lg btn-primary">Submit Feedback</button>
+    </div>
+  </div>
+
+</form>
+
+
+  <!-- Footer -->
+  <footer class="footer bg-dark">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-6 h-100 text-center text-lg-left my-auto">
+
+          <p class="text-white small mb-1 mb-lg-0">&copy; Zafar 2021. All Rights Reserved.</p>
+        </div>
+
+      </div>
+    </div>
+  </footer>
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="static/vendor/jquery/jquery.min.js"></script>
+  <script src="static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    const btn = document.querySelector("button");
+    const post = document.querySelector(".post");
+    const widget = document.querySelector(".star-widget");
+    const editBtn = document.querySelector(".edit");
+    btn.onclick = () => {
+      // widget.style.display = "none";
+      // post.style.display = "block";
+      editBtn.onclick = () => {
+        // widget.style.display = "block";
+        // post.style.display = "none";
+      }
+      return false;
+    }
+  </script>
+
+</body>
+
+</html>
