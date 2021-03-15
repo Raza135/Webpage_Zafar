@@ -61,14 +61,14 @@ def generate():
 
 @app.route("/getKeyWords", methods=['POST'])
 def getKeyWords():    
+    global data
+
     key1 = request.form.get('key1')
     key2 = request.form.get('key2')
     key3 = request.form.get('key3')
     key4 = request.form.get('key4')
     key5 = request.form.get('key5')
     numParas = request.form.get('numParas')
-    
-    global data
 
     data['key1'] = key1
     data['key2'] = key2
@@ -78,36 +78,45 @@ def getKeyWords():
 
     data['numParas'] = [i for i in range(1, int(numParas) + 1)]
 
+    timestampKeywords = datetime.datetime.now()
+
+    data['timestampKeywords'] = timestampKeywords
+
+    db.execute("INSERT INTO keywords (key1, key2, key3, key4, key5, time) VALUES (:key1I, :key2I, :key3I, :key4I, :key5I, :timeI)",{"key1I":key1, "key2I":key2, "key3I":key3, "key4I":key4, "key5I":key5, "timeI": timestampKeywords})
+
+    db.commit()
+
     return redirect(url_for('paragraphs'))
 
 
 @app.route("/paragraphs")
 def paragraphs():
-
     global data
+
+    keywordsID = list( db.execute("SELECT idkeywords FROM keywords WHERE key1 = :key1S AND key2 = :key2S AND key3 = :key3S AND key4 = :key4S AND key5 = :key5S AND time = :timeS", {'key1S':data['key1'], 'key2S':data['key2'], 'key3S':data['key3'], 'key4S':data['key4'], 'key5S':data['key5'], 'timeS':data['timestampKeywords'] }) )[0][0]
+
+    data['keywordsID'] = keywordsID
 
     data['paras'] = []
 
     for i in range(len(data['numParas'])):
         data['paras'].append(evaluateAndShowAttention([data['key1'],data['key2'],data['key3'],data['key4'],data['key5']], method='beam_search', is_sample=True))
 
-    # out1 = evaluateAndShowAttention([data['key1'],data['key2'],data['key3'],data['key4'],data['key5']], method='beam_search', is_sample=True)
+    for i in data['paras']:
+        db.execute("INSERT INTO paragraph (keywords_idkeywords, para) VALUES (:keywordIDI, :paraI)",{"keywordIDI":keywordsID, "paraI":i})
 
-    # out2 = evaluateAndShowAttention([data['key5'],data['key4'],data['key3'],data['key2'],data['key1']], method='beam_search', is_sample=True)
+    db.commit()
 
-    # out3 = evaluateAndShowAttention([data['key1'],data['key3'],data['key2'],data['key5'],data['key4']], method='beam_search', is_sample=True)
-
-    # out = [out1, out2, out3]
-
-    print(data)
+    # print(data)
     print([data['key1'],data['key3'],data['key2'],data['key5'],data['key4']])
-    # print(out3)
+
     return render_template("paragraphs.html",data=data)
 
 
 @app.route("/getFeedback", methods=['POST'])
 def getFeedback():
     global data
+
     feedback = {}
     coherency = 0
     relevance = 0
@@ -117,12 +126,27 @@ def getFeedback():
         coherency = request.form.get('p'+str(i)+'-rate_coherency')
         relevance = request.form.get('p'+str(i)+'-rate_relevance')
         grammar = request.form.get('p'+str(i)+'-rate_grammar')
-        feedback['para'+str(i)] = {'c': (0 if coherency == None else int(coherency) ),'r': (0 if relevance == None else int(relevance) ),'g': (0 if grammar == None else int(grammar) )}
+        
+        coherency = 0 if coherency == None else int(coherency) 
+        relevance = 0 if relevance == None else int(relevance)
+        grammar = 0 if grammar == None else int(grammar)
 
+        feedback['para'+str(i)] = {'c': coherency,'r': relevance,'g': grammar }
+
+        paraID = list( db.execute("SELECT idparagraph FROM paragraph WHERE keywords_idkeywords = :keywordIDS AND para = :paraS", {'keywordIDS':data['keywordsID'], 'paraS':data['paras'][i-1] }) )[0][0]
+
+        db.execute("INSERT INTO feedback (paragraph_idparagraph, coherency, relevance, grammar) VALUES (:paraIDI, :coherencyI, :relevanceI, :grammarI)",{"paraIDI":paraID, "coherencyI":coherency, "relevanceI": relevance, "grammarI":grammar})
+    
+    db.commit()   
+    
     print(feedback)
     print(data)
 
     return redirect(url_for('generate'))
+
+
+
+
 
 
 if __name__ == '__main__':
@@ -143,8 +167,6 @@ if __name__ == '__main__':
     print("total %d words" % len(word_vec))
 
 
-    #save_folder = "C:\Users\Leo-N\OneDrive\Desktop\University\Kaavish\Webpage_Zafar\modelTrained"
-
     word_to_idx = {ch: i for i, ch in enumerate(vocab)}
     idx_to_word = {i: ch for i, ch in enumerate(vocab)}
 
@@ -154,11 +176,9 @@ if __name__ == '__main__':
         topics = [word_to_idx[x] for x in topics]
         topics = torch.tensor(topics)
         topics = topics.reshape((1, topics.shape[0]))
-    #     hidden = torch.zeros(num_layers, 1, hidden_dim)
-    #     hidden = (torch.zeros(num_layers, 1, hidden_dim).to(device), torch.zeros(num_layers, 1, hidden_dim).to(device))
+
         hidden = model.init_hidden(batch_size=1)
         if use_gpu:
-    #         hidden = hidden.cuda()
             adaptive_softmax.to(device)
             topics = topics.to(device)
             # Also change seq_length here
@@ -168,12 +188,7 @@ if __name__ == '__main__':
         attentions = torch.zeros(num_chars, topics.shape[1])
         X = torch.tensor(output_idx[-1]).reshape((1, 1)).to(device)
         output = torch.zeros(1, hidden_dim).to(device)
-        log_prob, output, hidden, attn_weight, coverage_vector = model.inference(inputs=X, 
-                                                                    topics=topics, 
-                                                                    output=output, 
-                                                                    hidden=hidden, 
-                                                                    coverage_vector=coverage_vector, 
-                                                                    seq_length=seq_length)
+        log_prob, output, hidden, attn_weight, coverage_vector = model.inference(inputs=X, topics=topics, output=output, hidden=hidden, coverage_vector=coverage_vector, seq_length=seq_length)
         log_prob = log_prob.cpu().detach().reshape(-1).numpy()
     #     print(log_prob[10])
         """2"""
@@ -200,12 +215,7 @@ if __name__ == '__main__':
                 """5"""
                 X = torch.tensor(b[2]).reshape((1, 1)).to(device)
                 """6"""
-                log_prob, output, hidden, attn_weight, coverage_vector = model.inference(inputs=X, 
-                                                                            topics=topics, 
-                                                                            output=b[6], 
-                                                                            hidden=b[5], 
-                                                                            coverage_vector=b[7], 
-                                                                            seq_length=seq_length)
+                log_prob, output, hidden, attn_weight, coverage_vector = model.inference(inputs=X, topics=topics, output=b[6], hidden=b[5], coverage_vector=b[7], seq_length=seq_length)
                 log_prob = log_prob.cpu().detach().reshape(-1).numpy()
                 """8"""
                 if is_sample:
@@ -249,8 +259,6 @@ if __name__ == '__main__':
 
         #showAttention(' '.join(input_sentence), output_words, attentions)
     # run for inference 12
-
-
 
     embedding_dim = 100     # depends on your Word2Vec model embedding size
             # hidden_dim = 512
@@ -392,12 +400,7 @@ if __name__ == '__main__':
             output_states = []
             attn_weight = []
             for i in range(len(inputs)):
-                output, hidden, score, coverage_vector = self.decoder(input=inputs[i].unsqueeze(0), 
-                                                                            output=output, 
-                                                                            hidden=hidden, 
-                                                                            phi=phi, 
-                                                                            topics=topics_embed, 
-                                                                            coverage_vector=coverage_vector) # [seq_len x batch x embed_size]
+                output, hidden, score, coverage_vector = self.decoder(input=inputs[i].unsqueeze(0), output=output, hidden=hidden, phi=phi, topics=topics_embed, coverage_vector=coverage_vector) # [seq_len x batch x embed_size]
                 output_states += [output]
                 attn_weight += [score]
                 
@@ -422,12 +425,7 @@ if __name__ == '__main__':
             output_states = []
             attn_weight = []
             for i in range(len(inputs)):
-                output, hidden, score, coverage_vector = self.decoder(input=inputs[i].unsqueeze(0), 
-                                                                            output=output, 
-                                                                            hidden=hidden, 
-                                                                            phi=phi, 
-                                                                            topics=topics_embed, 
-                                                                            coverage_vector=coverage_vector) # [seq_len x batch x embed_size]
+                output, hidden, score, coverage_vector = self.decoder(input=inputs[i].unsqueeze(0), output=output, hidden=hidden, phi=phi, topics=topics_embed, coverage_vector=coverage_vector) # [seq_len x batch x embed_size]
                 output_states += [output]
                 attn_weight += [score]
                 
