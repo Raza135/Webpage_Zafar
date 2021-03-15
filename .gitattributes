@@ -1,0 +1,6 @@
+modelFiles/model_trainable_1.pk filter=lfs diff=lfs merge=lfs -text
+modelFiles/optim_trainable_1.pkl filter=lfs diff=lfs merge=lfs -text
+modelFiles/bleu_trainable_1.pkl filter=lfs diff=lfs merge=lfs -text
+modelFiles/data_big_W2V.txt filter=lfs diff=lfs merge=lfs -text
+modelFiles/epoch_trainable_1.pkl filter=lfs diff=lfs merge=lfs -text
+modelFiles/loss_trainable_1.pkl filter=lfs diff=lfs merge=lfs -text

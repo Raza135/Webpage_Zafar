@@ -136,18 +136,19 @@
         <h2 class="mb-5">Interested to know more or got a feedback? Reach out to us over email.</h2>
       </div>
       <div class="col-md-10 col-lg-8 col-xl-7 mx-auto">
-        <form>
+
+        <form method="post" action="{{ url_for('getMessage') }}">
           <!-- <div class="form-row"> -->
           <div class="col-xl-12 col-md-12 mb-3 mx-auto">
-            <textarea class="form-control form-control-lg text-white bg-dark" placeholder="Thoughts or message..."></textarea>
+            <textarea name="message" class="form-control form-control-lg text-white bg-dark" placeholder="Thoughts or message..."></textarea>
           </div>
 
           <div class="col-12 col-md-9 mb-3 mx-auto">
-            <input type="email" class="form-control form-control-lg text-white bg-dark" placeholder="Your name...">
+            <input name="name" type="text" class="form-control form-control-lg text-white bg-dark" placeholder="Your name...">
           </div>
 
           <div class="col-12 col-md-9 mb-3 mx-auto">
-            <input type="email" class="form-control form-control-lg text-white bg-dark" placeholder="Way to contact you back, aka email ID...">
+            <input name="email" type="email" class="form-control form-control-lg text-white bg-dark" placeholder="Way to contact you back, aka email ID...">
           </div>
 
           <div class="col-12 col-md-3 mb-3 mx-auto">
@@ -155,6 +156,7 @@
           </div>
           <!-- </div> -->
         </form>
+
       </div>
       <!-- </div> -->
     </div>

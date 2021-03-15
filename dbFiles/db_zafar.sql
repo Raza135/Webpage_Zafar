@@ -1,50 +1,50 @@
 CREATE TABLE Message (
-  idMessage INTEGER UNSIGNED  NOT NULL   AUTO_INCREMENT,
-  time TIMESTAMP  NULL  ,
-  name VARCHAR(255)  NULL  ,
-  message TEXT  NULL  ,
-  email VARCHAR(255)  NULL    ,
+  idMessage SERIAL  NOT NULL ,
+  time TIMESTAMP    ,
+  name VARCHAR(255)    ,
+  message TEXT    ,
+  email VARCHAR(255)      ,
 PRIMARY KEY(idMessage));
 
 
 
 CREATE TABLE Keywords (
-  idKeywords INTEGER UNSIGNED  NOT NULL   AUTO_INCREMENT,
-  key1 VARCHAR(45)  NULL  ,
-  key2 VARCHAR(45)  NULL  ,
-  key3 VARCHAR(45)  NULL  ,
-  key4 VARCHAR(45)  NULL  ,
-  key5 VARCHAR(45)  NULL  ,
-  time TIMESTAMP  NULL    ,
+  idKeywords SERIAL  NOT NULL ,
+  key1 VARCHAR(45)    ,
+  key2 VARCHAR(45)    ,
+  key3 VARCHAR(45)    ,
+  key4 VARCHAR(45)    ,
+  key5 VARCHAR(45)    ,
+  time TIMESTAMP      ,
 PRIMARY KEY(idKeywords));
 
 
 
 CREATE TABLE Paragraph (
-  idParagraph INTEGER UNSIGNED  NOT NULL   AUTO_INCREMENT,
-  Keywords_idKeywords INTEGER UNSIGNED  NOT NULL  ,
-  para TEXT  NULL    ,
+  idParagraph SERIAL  NOT NULL ,
+  Keywords_idKeywords INTEGER   NOT NULL ,
+  para TEXT      ,
 PRIMARY KEY(idParagraph)  ,
-INDEX Paragraph_FKIndex1(Keywords_idKeywords),
   FOREIGN KEY(Keywords_idKeywords)
-    REFERENCES Keywords(idKeywords)
-      ON DELETE NO ACTION
-      ON UPDATE NO ACTION);
+    REFERENCES Keywords(idKeywords));
+
+
+CREATE INDEX Paragraph_FKIndex1 ON Paragraph (Keywords_idKeywords);
 
 
 
 CREATE TABLE Feedback (
-  idFeedback INTEGER UNSIGNED  NOT NULL   AUTO_INCREMENT,
-  Paragraph_idParagraph INTEGER UNSIGNED  NOT NULL  ,
-  coherency INTEGER UNSIGNED  NULL  ,
-  relevance INTEGER UNSIGNED  NULL  ,
-  grammar INTEGER UNSIGNED  NULL    ,
+  idFeedback SERIAL  NOT NULL ,
+  Paragraph_idParagraph INTEGER   NOT NULL ,
+  coherency INTEGER    ,
+  relevance INTEGER    ,
+  grammar INTEGER      ,
 PRIMARY KEY(idFeedback)  ,
-INDEX Feedback_FKIndex1(Paragraph_idParagraph),
   FOREIGN KEY(Paragraph_idParagraph)
-    REFERENCES Paragraph(idParagraph)
-      ON DELETE NO ACTION
-      ON UPDATE NO ACTION);
+    REFERENCES Paragraph(idParagraph));
+
+
+CREATE INDEX Feedback_FKIndex1 ON Feedback (Paragraph_idParagraph);
 
 
 

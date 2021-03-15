@@ -1,4 +1,7 @@
-from flask import Flask, render_template, url_for, request, redirect
+from flask import Flask, render_template, request, redirect, url_for, jsonify, flash
+from sqlalchemy import create_engine
+from sqlalchemy.orm import scoped_session, sessionmaker
+import datetime
 
 import gensim
 from gensim.models import KeyedVectors
@@ -20,6 +23,11 @@ import random
 
 app = Flask(__name__)
 
+APP_ROOT = os.path.dirname(os.path.abspath(__file__))
+
+engine = create_engine("postgresql://ahmed:786110@127.0.0.1:5432/zafar")
+db = scoped_session(sessionmaker(bind=engine))
+
 # global variables
 data = {}
 
@@ -28,6 +36,20 @@ def index():
     global data
     data = {}
     return render_template("index.html")
+
+
+@app.route("/getMessage", methods=['POST'])
+def getMessage():
+    message = request.form.get('message')
+    name = request.form.get('name')
+    email = request.form.get('email')
+    timestamp = datetime.datetime.now()
+
+    db.execute("INSERT INTO message (time, name, message, email) VALUES (:timeI, :nameI, :messageI, :emailI)",{"timeI":timestamp, "nameI":name, "messageI":message, "emailI":email})
+
+    db.commit()
+
+    return redirect(url_for('index'))
 
 
 @app.route("/generate")
@@ -108,7 +130,7 @@ if __name__ == '__main__':
     deviceName = "cpu"
     device = torch.device(deviceName)
 
-    file_path = "data_big_W2V.txt"
+    file_path = "modelFiles/data_big_W2V.txt"
 
     fvec = KeyedVectors.load_word2vec_format(file_path, binary=False)
     word_vec = fvec.vectors
@@ -458,11 +480,11 @@ if __name__ == '__main__':
     version_num = 1
     # Type = 'best'
     Type = 'trainable'
-    model_check_point = 'model_%s_%d.pk' % (Type, version_num)
-    optim_check_point = 'optim_%s_%d.pkl' % (Type, version_num)
-    loss_check_point = 'loss_%s_%d.pkl' % (Type, version_num)
-    epoch_check_point = 'epoch_%s_%d.pkl' % (Type, version_num)
-    bleu_check_point = 'bleu_%s_%d.pkl' % (Type, version_num)
+    model_check_point = 'modelFiles/model_%s_%d.pk' % (Type, version_num)
+    optim_check_point = 'modelFiles/optim_%s_%d.pkl' % (Type, version_num)
+    loss_check_point = 'modelFiles/loss_%s_%d.pkl' % (Type, version_num)
+    epoch_check_point = 'modelFiles/epoch_%s_%d.pkl' % (Type, version_num)
+    bleu_check_point = 'modelFiles/bleu_%s_%d.pkl' % (Type, version_num)
     loss_values = []
     epoch_values = []
     bleu_values = []
