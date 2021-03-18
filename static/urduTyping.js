@@ -1016,7 +1016,7 @@ function initUrduEditor()
 	}
 	
 
-	document.writeln('<style type="text/css">@import "'+_sp+'OpenPad.css";</style>');
+	// document.writeln('<style type="text/css">@import "'+_sp+'OpenPad.css";</style>');
     
     document.onmouseover=r;
 	document.onmouseout=n;

@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, jsonify, flash
+from flask import Flask, render_template, request, redirect, url_for, jsonify, flash, session
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 import datetime
@@ -22,11 +22,23 @@ from collections import namedtuple
 import random
 
 app = Flask(__name__)
+app.secret_key = b'_5#y2L"F4Q8z/n/xec]/'
+
 
 APP_ROOT = os.path.dirname(os.path.abspath(__file__))
 
 engine = create_engine("postgresql://ahmed:786110@127.0.0.1:5432/zafar")
 db = scoped_session(sessionmaker(bind=engine))
+
+'''
+routes:
+/ -> index
+/getMessage -> POST
+/generate
+/getKeyWords -> POST
+/paragraphs
+/getFeedback -> POST
+'''
 
 # global variables
 data = {}
@@ -92,6 +104,9 @@ def getKeyWords():
 @app.route("/paragraphs")
 def paragraphs():
     global data
+
+    if "key1" not in data:
+        return redirect(url_for('generate'))
 
     keywordsID = list( db.execute("SELECT idkeywords FROM keywords WHERE key1 = :key1S AND key2 = :key2S AND key3 = :key3S AND key4 = :key4S AND key5 = :key5S AND time = :timeS", {'key1S':data['key1'], 'key2S':data['key2'], 'key3S':data['key3'], 'key4S':data['key4'], 'key5S':data['key5'], 'timeS':data['timestampKeywords'] }) )[0][0]
 
