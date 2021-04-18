@@ -76,20 +76,25 @@
     <div class="container p-5">
       <div class="form-row col-12 mx-auto">
         <p class="lead mb-4">
-          To generate a paragraph, enter Urdu keywords in the following boxes. You can provide up to five keywords but
-          at least one. Model will try to generate a paragraph in context of given keywords. You can also provide
+          To generate a paragraph, enter Urdu keywords in the following boxes. You can enter five keywords. Model will try to generate a paragraph in context of given keywords. You can also provide
           feedback after paragraph has been generated. Feedback comprises of score on coherency, relevance to the
           keywords and grammar of generated paragraph.</p>
         <p class="lead mb-4">
-          Note that the following text-boxes for keywords have set to type in Urdu. You just need to type in English and
-          the characters will be transcribed to their phonetic counterparts in Urdu.</p>
-      </div>
+          Note that the following text-boxes for keywords have been set to type in Urdu. You just need to type in English and
+          the characters will be transcribed to their phonetic counterparts in Urdu. Special Thanks to Nabeel Hasan Naqvi for this <a href="https://urdumehfil.net/wp-content/themes/sabaz-urdu/urdu-open-pad.js" target="_blank">feature</a>.</p>
+        </div>
+
+        <div class="row col-md-6 mb-3 mx-auto">
+          <button id="layoutShowHideButton" class="btn btn-block btn-lg btn-primary">Show Urdu Keyboard Layout</button>
+        </div>
+      
+        <div class="row" id="layoutImageDiv" style="display: none;">
+          <img class="mx-auto d-block" src="static/img/urduPhoneticKeyBoardLayout.png">
+
+          <p>Note: This keyboard works on mapping mechanism and not all mappings have been implemented as shown in the layout image. Special Thanks to <a class="text-center" href="https://www.mbilalm.com/urdu-phonetic-keyboard.php">mbilalm.com</a> for the layout.</p>
+        </div>
     </div>
   </section>
-
-  <!-- https://hindityping.info/online-urdu-typing-test/ -->
-
-  <!-- https://in.pinterest.com/pin/526428643923238528/ -->
 
   <section>
 
@@ -98,8 +103,8 @@
       <div class="container mb-5">
         <div class="col-12 col-md-6 mb-3 mx-auto">
           <input lang="ur" name="key1" type="text" class="form-control form-control-lg text-white bg-dark"
-            placeholder=" کرکٹ Keyword 1, example " required
-            style="font-family: urduNastaliq, Fallback, sans-serif; text-align: left; direction: rtl;" id="input_key1">
+            placeholder=" کرکٹ Keyword 1, example "
+            style="font-family: urduNastaliq, Fallback, sans-serif; text-align: left; direction: rtl;" id="input_key1" required>
         </div>
 
         <script type=text/javascript>makeUrduEditor("key1", "24px")</script>
@@ -107,7 +112,7 @@
         <div class="col-12 col-md-6 mb-3 mx-auto">
           <input lang="ur" name="key2" type="text" class="form-control form-control-lg text-white bg-dark"
             placeholder=" پاکستان Keyword 2, example "
-            style="font-family: urduNastaliq, Fallback, sans-serif; text-align: left; direction: rtl;" id="input_key2">
+            style="font-family: urduNastaliq, Fallback, sans-serif; text-align: left; direction: rtl;" id="input_key2" required>
         </div>
 
         <script type=text/javascript>makeUrduEditor("key2", "24px")</script>
@@ -115,7 +120,7 @@
         <div class="col-12 col-md-6 mb-3 mx-auto">
           <input lang="ur" name="key3" type="text" class="form-control form-control-lg text-white bg-dark"
             placeholder=" میچ Keyword 3, example "
-            style="font-family: urduNastaliq, Fallback, sans-serif; text-align: left; direction: rtl;" id="input_key3">
+            style="font-family: urduNastaliq, Fallback, sans-serif; text-align: left; direction: rtl;" id="input_key3" required>
         </div>
 
         <script type=text/javascript>makeUrduEditor("key3", "24px")</script>
@@ -123,7 +128,7 @@
         <div class="col-12 col-md-6 mb-3 mx-auto">
           <input lang="ur" name="key4" type="text" class="form-control form-control-lg text-white bg-dark"
             placeholder=" جیت Keyword 4, example "
-            style="font-family: urduNastaliq, Fallback, sans-serif; text-align: left; direction: rtl;" id="input_key4">
+            style="font-family: urduNastaliq, Fallback, sans-serif; text-align: left; direction: rtl;" id="input_key4" required>
         </div>
 
         <script type=text/javascript>makeUrduEditor("key4", "24px")</script>
@@ -131,7 +136,7 @@
         <div class="col-12 col-md-6 mb-3 mx-auto">
           <input lang="ur" name="key5" type="text" class="form-control form-control-lg text-white bg-dark"
             placeholder=" ایک Keyword 5, example "
-            style="font-family: urduNastaliq, Fallback, sans-serif; text-align: left; direction: rtl;" id="input_key5">
+            style="font-family: urduNastaliq, Fallback, sans-serif; text-align: left; direction: rtl;" id="input_key5" required>
         </div>
 
         <script type=text/javascript>makeUrduEditor("key5", "24px")</script>
@@ -181,20 +186,21 @@
   <script src="static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
   <script>
-    const btn = document.querySelector("button");
-    const post = document.querySelector(".post");
-    const widget = document.querySelector(".star-widget");
-    const editBtn = document.querySelector(".edit");
-    btn.onclick = () => {
-      // widget.style.display = "none";
-      // post.style.display = "block";
-      editBtn.onclick = () => {
-        // widget.style.display = "block";
-        // post.style.display = "none";
-      }
-      return false;
-    }
+    $(document).ready(function () {
+      $("#layoutShowHideButton").click(function () {
+        $("#layoutImageDiv").toggle();
+
+        if ($(this).text() == "Show Urdu Keyboard Layout") {
+          $(this).text("Hide Urdu Keyboard Layout");
+        } else {
+          $(this).text("Show Urdu Keyboard Layout");
+        };
+      });
+    });
+
   </script>
+    
+
 
 </body>
 

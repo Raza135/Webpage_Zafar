@@ -130,11 +130,21 @@ def paragraphs():
 
     print("session data:", key1, key2, key3, key4, key5, timestampKeywords, keywordsID)
 
-    session['paras'] = []
+    paras = []
 
     for i in range(len(session['numParas'])):
-        session['paras'].append(evaluateAndShowAttention(
+        paras.append(evaluateAndShowAttention(
             [key1, key2, key3, key4, key5], method='beam_search', is_sample=True))
+    
+    print("before", paras)
+
+    session['paras'] = []
+    
+    for i in paras:
+        temp = i.replace("<BOS>", "").replace("<UNK>", "").replace("<EOS>", "").replace("<PAD>", "")
+        session["paras"].append(temp)
+
+    print("after", session["paras"])
 
     for i in session['paras']:
         db.execute("INSERT INTO paragraph (keywords_idkeywords, para) VALUES (:keywordIDI, :paraI)", {
@@ -535,7 +545,7 @@ if __name__ == '__main__':
 
     save_folder = ""
     # run for inference 13
-    version_num = 1
+    version_num = 67
     # Type = 'best'
     Type = 'trainable'
     model_check_point = 'modelFiles/model_%s_%d.pk' % (Type, version_num)
