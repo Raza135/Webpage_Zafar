@@ -115,6 +115,10 @@ def getKeyWords():
 
     return redirect(url_for('paragraphs'))
 
+def checkKeyword(keyword):
+    if keyword not in vocab:
+        return vocab[3]
+    return keyword
 
 @app.route("/paragraphs")
 def paragraphs():
@@ -125,6 +129,13 @@ def paragraphs():
     key3 = session['key3']
     key4 = session['key4']
     key5 = session['key5']
+    
+    key1 = checkKeyword(key1)
+    key2 = checkKeyword(key2)
+    key3 = checkKeyword(key3)
+    key4 = checkKeyword(key4)
+    key5 = checkKeyword(key5)
+    
     timestampKeywords = session['timestampKeywords']
     keywordsID = session['keywordsID']
 
@@ -321,8 +332,8 @@ if __name__ == '__main__':
     # run for inference 12
 
     embedding_dim = 100     # depends on your Word2Vec model embedding size
-    # hidden_dim = 512
-    hidden_dim = 128
+    hidden_dim = 512
+    #hidden_dim = 128
     lr = 1e-3 * 0.5
     momentum = 0.01
 
@@ -334,9 +345,9 @@ if __name__ == '__main__':
     # use_gpu = False
     num_layers = 2
     # num_layers = 1
-    bidirectional = False
-    # batch_size = 32
-    batch_size = 4
+    bidirectional = True
+    batch_size = 32
+    #batch_size = 4
     num_keywords = 5            # change this if more keywords
     verbose = 1
     check_point = 5
@@ -545,7 +556,7 @@ if __name__ == '__main__':
 
     save_folder = ""
     # run for inference 13
-    version_num = 67
+    version_num = 901
     # Type = 'best'
     Type = 'trainable'
     model_check_point = 'modelFiles/model_%s_%d.pk' % (Type, version_num)
